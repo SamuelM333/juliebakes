@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'home',
     'search',
 
+    'hitcount',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -153,6 +154,9 @@ MEDIA_URL = '/media/'
 
 WAGTAIL_SITE_NAME = "juliebakes"
 
+# Hit count settings
+HITCOUNT_HITS_PER_IP_LIMIT = 1 
+
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://example.com'
+BASE_URL = 'http://julie-bakes.com'

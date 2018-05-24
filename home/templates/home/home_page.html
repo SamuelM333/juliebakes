@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags hitcount_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
+{% get_hit_count for page as hitcount %}
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -430,16 +431,17 @@
           <!--</li>-->
         </ul>
       </div>
-      <!--<div class="col-md-4">-->
-      <!--  <ul class="list-inline quicklinks">-->
-      <!--    <li class="list-inline-item">-->
-      <!--      <a href="#">Privacy Policy</a>-->
-      <!--    </li>-->
-      <!--    <li class="list-inline-item">-->
+      <div class="col-md-4">
+       <ul class="list-inline quicklinks">
+         <li class="list-inline-item">
+           <span>Visitas: {{hitcount}}</span>
+           <!-- <a href="#"></a> -->
+         </li>
+         <!-- <li class="list-inline-item"> -->
       <!--      <a href="#">Terms of Use</a>-->
       <!--    </li>-->
-      <!--  </ul>-->
-      <!--</div>-->
+       </ul>
+      </div>
     </div>
   </div>
 </footer>
@@ -649,4 +651,23 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{% get_hit_count_js_variables for page as hitcount_js %}
+<script src="{% static 'hitcount/jquery.postcsrf.js' %}"></script>
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+    // use the template tags in our JavaScript call
+    $.postCSRF("{{ hitcount_js.ajax_url }}", { hitcountPK : "{{ hitcount_js.pk }}" })
+      .done(function(data){
+        $('<i/>').text(data.hit_counted).attr('id','hit-counted-value').appendTo('#hit-counted');
+        $('#hit-response').text(data.hit_message);
+    }).fail(function(data){
+        console.log('POST failed');
+        console.log(data);
+    });
+  });
+  </script>
+
 {% endblock %}
