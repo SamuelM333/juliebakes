@@ -23,32 +23,99 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Application definition
 
+# INSTALLED_APPS = [
+#     'home',
+#     'search',
+#     'products'
+
+#     'hitcount',
+#     # 'wagtail.contrib.forms',
+#     # 'wagtail.contrib.redirects',
+#     # 'wagtail.embeds',
+#     # 'wagtail.sites',
+#     # 'wagtail.users',
+#     # 'wagtail.snippets',
+#     # 'wagtail.documents',
+#     # 'wagtail.images',
+#     # 'wagtail.search',
+#     # 'wagtail.admin',
+#     # 'wagtail.core',
+
+#     'wagtail.wagtailforms',
+#     'wagtail.wagtailredirects',
+#     'wagtail.wagtailembeds',
+#     'wagtail.wagtailsites',
+#     'wagtail.wagtailusers',
+#     'wagtail.wagtailsnippets',
+#     'wagtail.wagtaildocs',
+#     'wagtail.wagtailimages',
+#     'wagtail.wagtailsearch',
+#     'wagtail.wagtailadmin',
+#     'wagtail.wagtailcore',
+#     'wagtail.contrib.modeladmin',
+#     'wagtail.contrib.settings',
+
+#     'modelcluster',
+#     'taggit',
+#     'rest_framework',
+
+#     'longclaw.longclawcore',
+#     'longclaw.longclawsettings',
+#     'longclaw.longclawshipping',
+#     'longclaw.longclawproducts',
+#     'longclaw.longclaworders',
+#     'longclaw.longclawcheckout',
+#     'longclaw.longclawbasket',
+#     'longclaw.longclawstats',
+
+#     'django.contrib.admin',
+#     'django.contrib.auth',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+# ]
+
 INSTALLED_APPS = [
-    'home',
-    'search',
-
-    'hitcount',
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
-
-    'modelcluster',
-    'taggit',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
+    'wagtail.contrib.modeladmin',
+    'wagtail.contrib.settings',
+
+    'modelcluster',
+    'taggit',
+    'rest_framework',
+    'hitcount',
+
+    'longclaw.longclawcore',
+    'longclaw.longclawsettings',
+    'longclaw.longclawshipping',
+    'longclaw.longclawproducts',
+    'longclaw.longclaworders',
+    'longclaw.longclawcheckout',
+    'longclaw.longclawbasket',
+    'longclaw.longclawstats',
+
+    'home',
+    'search',
+    'products'
+
 ]
 
 MIDDLEWARE = [
@@ -56,12 +123,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    'wagtail.core.middleware.SiteMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'juliebakes.urls'
@@ -79,6 +147,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'longclaw.longclawsettings.context_processors.currency',
             ],
         },
     },
@@ -155,8 +224,16 @@ MEDIA_URL = '/media/'
 WAGTAIL_SITE_NAME = "juliebakes"
 
 # Hit count settings
-HITCOUNT_HITS_PER_IP_LIMIT = 1 
+HITCOUNT_HITS_PER_IP_LIMIT = 0
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://julie-bakes.com'
+BASE_URL = 'https://julie-bakes.com'
+
+# Longclaw settings
+
+# The payment gateway to use. `BasePayment` is a dummy payment gateway for testing.
+# Longclaw also offers 'BraintreePayment', 'PaypalVZeroPayment' and 'StripePayment'
+PAYMENT_GATEWAY = 'longclaw.longclawcheckout.gateways.BasePayment'
+
+PRODUCT_VARIANT_MODEL = 'products.ProductVariant'
