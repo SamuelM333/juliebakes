@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags longclawbasket_tags %}
 
 {% block body_class %} template-productpage {%endblock%}
 
@@ -22,6 +22,8 @@
     <div class="product_content_info">
         <h1 class="product_title">{{ page.title }}</h1>
         <div class="product_description">{{ page.description|richtext  }}</div>
+        {% add_to_basket_btn page.id btn_text="Add To Basket" btn_class="btn btn-default" %}
+        <a href="{% url 'longclaw_basket' %}">Carrito</a>
     </div>
 </div>
   {% if page.tags.all.count %}
@@ -33,6 +35,6 @@
     </div>
   {% endif %}
 
-    <p><a href="{{ page.get_parent.url }}">Return</a></p>
+    <p><a href="{{ page.get_parent.get_parent.url }}">Return</a></p>
 
 {% endblock %}

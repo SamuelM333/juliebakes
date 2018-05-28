@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailuserbar longclawcore_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,11 +50,15 @@
     {% block content %}{% endblock %}
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
     <!--<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"
             integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
     <!-- Plugin JavaScript -->
     <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    {% longclaw_vendors_bundle %}
+    {% longclaw_client_bundle %}
 
     <!-- Contact form JavaScript -->
 
