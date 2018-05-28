@@ -16,10 +16,13 @@ class ProductIndex(Page):
 class Product(ProductBase):
     parent_page_types = ['products.ProductIndex']
     description = RichTextField()
+    featured_product = models.BooleanField(default=False)
+
     content_panels = ProductBase.content_panels + [
         FieldPanel('description'),
+        FieldPanel('featured_product'),
         InlinePanel('variants', label='Product variants'),
-
+        InlinePanel('images', label='Product images')
     ]
 
     @property
@@ -34,15 +37,12 @@ class ProductVariant(ProductVariantBase):
     # want to support 1 'variant' per 'product'.
     product = ParentalKey(Product, related_name='variants')
 
-    slug = AutoSlugField(
-        separator='',
-        populate_from=('product', 'ref'),
-        )
+    slug = AutoSlugField(separator='', populate_from=('product', 'ref'))
 
     # Enter your custom product variant fields here
     # e.g. colour, size, stock and so on.
     # Remember, ProductVariantBase provides 'price', 'ref' and 'stock' fields
-    description = RichTextField()
+    description = RichTextField(blank=True)
 
 
 class ProductImage(Orderable):

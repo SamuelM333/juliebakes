@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags hitcount_tags %}
+{% load static wagtailcore_tags wagtailimages_tags hitcount_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
@@ -97,266 +97,44 @@
         <h3 class="section-subheading text-muted">{{ page.section_two_body|richtext }}</h3>
       </div>
     </div>
+    <!-- <div class="row">
+        <div class="col-lg-12 text-center">
+            <a class="btn btn-primary" href="{{ page.get_children.first.url }}">Ver todos</a>
+        </div>
+    </div> -->
     <div class="row">
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fa fa-plus fa-3x"></i>
-            </div>
-          </div>
-          <img class="img-fluid" src="{% static 'img/tortas/torta_de_pina.jpg' %}" alt="">
-        </a>
-        <div class="portfolio-caption">
-          <h4>{{ page.section_two_item_one_title }}</h4>
-          <!--<p class="text-muted">Illustration</p>-->
+      {% for category in page.get_children.first.get_children %}
+        {% with category=category.specific %}
+          {% for product in category.get_children %}
+            {% with product=product.specific %}
+              {% if product.featured_product %}
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                  <a class="portfolio-link" data-toggle="modal" href="#portfolioModal{{ product.pk }}">
+                    <div class="portfolio-hover">
+                      <div class="portfolio-hover-content">
+                        <i class="fa fa-plus fa-3x"></i>
+                      </div>
+                    </div>
+                    {% image product.first_image.image fill-350x320-c100 class="img-fluid" %}
+                  </a>
+                  <div class="portfolio-caption">
+                    <h4>{{ product.title }}</h4>
+                    <!--<p class="text-muted">Illustration</p>-->
+                  </div>
+                </div>
+              {% endif %}
+            {% endwith %}
+          {% endfor %}
+        {% endwith %}
+      {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <a class="btn btn-primary" href="{{ page.get_children.first.url }}">Ver todos</a>
         </div>
-      </div>
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fa fa-plus fa-3x"></i>
-            </div>
-          </div>
-          <img class="img-fluid" src="{% static 'img/tortas/torta_de_fresa.jpg' %}" alt="">
-        </a>
-        <div class="portfolio-caption">
-          <h4>{{ page.section_two_item_two_title }}</h4>
-          <!--<p class="text-muted">Graphic Design</p>-->
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fa fa-plus fa-3x"></i>
-            </div>
-          </div>
-          <img class="img-fluid" src="{% static 'img/tortas/torta_de_chocolate.jpg' %}" alt="">
-        </a>
-        <div class="portfolio-caption">
-          <h4>{{ page.section_two_item_three_title }}</h4>
-          <!--<p class="text-muted">Identity</p>-->
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fa fa-plus fa-3x"></i>
-            </div>
-          </div>
-          <img class="img-fluid" src="{% static 'img/tortas/torta_marmoleada.jpg' %}" alt="">
-        </a>
-        <div class="portfolio-caption">
-          <h4>{{ page.section_two_item_four_title }}</h4>
-          <!--<p class="text-muted">Branding</p>-->
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fa fa-plus fa-3x"></i>
-            </div>
-          </div>
-          <img class="img-fluid" src="{% static 'img/tortas/torta_tres_leches.jpg' %}" alt="">
-        </a>
-        <div class="portfolio-caption">
-          <h4>{{ page.section_two_item_five_title }}</h4>
-          <!--<p class="text-muted">Website Design</p>-->
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
-          <div class="portfolio-hover">
-            <div class="portfolio-hover-content">
-              <i class="fa fa-plus fa-3x"></i>
-            </div>
-          </div>
-          <img class="img-fluid" src="{% static 'img/tortas/profiteroles.jpeg' %}" alt="">
-        </a>
-        <div class="portfolio-caption">
-          <h4>{{ page.section_two_item_six_title }}</h4>
-          <!--<p class="text-muted">Photography</p>-->
-        </div>
-      </div>
     </div>
   </div>
 </section>
-
-<!-- About -->
-<!--<section id="about">-->
-<!--  <div class="container">-->
-<!--    <div class="row">-->
-<!--      <div class="col-lg-12 text-center">-->
-<!--        <h2 class="section-heading text-uppercase">About</h2>-->
-<!--        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="col-lg-12">-->
-<!--        <ul class="timeline">-->
-<!--          <li>-->
-<!--            <div class="timeline-image">-->
-<!--              <img class="rounded-circle img-fluid" src="{% static 'img/about/1.jpg' %}" alt="">-->
-<!--            </div>-->
-<!--            <div class="timeline-panel">-->
-<!--              <div class="timeline-heading">-->
-<!--                <h4>2009-2011</h4>-->
-<!--                <h4 class="subheading">Our Humble Beginnings</h4>-->
-<!--              </div>-->
-<!--              <div class="timeline-body">-->
-<!--                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li class="timeline-inverted">-->
-<!--            <div class="timeline-image">-->
-<!--              <img class="rounded-circle img-fluid" src="{% static 'img/about/2.jpg' %}" alt="">-->
-<!--            </div>-->
-<!--            <div class="timeline-panel">-->
-<!--              <div class="timeline-heading">-->
-<!--                <h4>March 2011</h4>-->
-<!--                <h4 class="subheading">An Agency is Born</h4>-->
-<!--              </div>-->
-<!--              <div class="timeline-body">-->
-<!--                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <div class="timeline-image">-->
-<!--              <img class="rounded-circle img-fluid" src="{% static 'img/about/3.jpg' %}" alt="">-->
-<!--            </div>-->
-<!--            <div class="timeline-panel">-->
-<!--              <div class="timeline-heading">-->
-<!--                <h4>December 2012</h4>-->
-<!--                <h4 class="subheading">Transition to Full Service</h4>-->
-<!--              </div>-->
-<!--              <div class="timeline-body">-->
-<!--                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li class="timeline-inverted">-->
-<!--            <div class="timeline-image">-->
-<!--              <img class="rounded-circle img-fluid" src="{% static 'img/about/4.jpg' %}" alt="">-->
-<!--            </div>-->
-<!--            <div class="timeline-panel">-->
-<!--              <div class="timeline-heading">-->
-<!--                <h4>July 2014</h4>-->
-<!--                <h4 class="subheading">Phase Two Expansion</h4>-->
-<!--              </div>-->
-<!--              <div class="timeline-body">-->
-<!--                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li class="timeline-inverted">-->
-<!--            <div class="timeline-image">-->
-<!--              <h4>Be Part-->
-<!--                <br>Of Our-->
-<!--                <br>Story!</h4>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
-
-<!-- Team -->
-<!--<section class="bg-light" id="team">-->
-<!--  <div class="container">-->
-<!--    <div class="row">-->
-<!--      <div class="col-lg-12 text-center">-->
-<!--        <h2 class="section-heading text-uppercase">Our Amazing Team</h2>-->
-<!--        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="col-sm-4">-->
-<!--        <div class="team-member">-->
-<!--          <img class="mx-auto rounded-circle" src="{% static 'img/team/1.jpg' %}" alt="">-->
-<!--          <h4>Kay Garland</h4>-->
-<!--          <p class="text-muted">Lead Designer</p>-->
-<!--          <ul class="list-inline social-buttons">-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-twitter"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-facebook"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-linkedin"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4">-->
-<!--        <div class="team-member">-->
-<!--          <img class="mx-auto rounded-circle" src="{% static 'img/team/2.jpg' %}" alt="">-->
-<!--          <h4>Larry Parker</h4>-->
-<!--          <p class="text-muted">Lead Marketer</p>-->
-<!--          <ul class="list-inline social-buttons">-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-twitter"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-facebook"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-linkedin"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-sm-4">-->
-<!--        <div class="team-member">-->
-<!--          <img class="mx-auto rounded-circle" src="{% static 'img/team/3.jpg' %}" alt="">-->
-<!--          <h4>Diana Pertersen</h4>-->
-<!--          <p class="text-muted">Lead Developer</p>-->
-<!--          <ul class="list-inline social-buttons">-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-twitter"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-facebook"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--            <li class="list-inline-item">-->
-<!--              <a href="#">-->
-<!--                <i class="fa fa-linkedin"></i>-->
-<!--              </a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--      <div class="col-lg-8 mx-auto text-center">-->
-<!--        <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
 
 <!-- Contact -->
 <section id="contact">
@@ -447,209 +225,51 @@
 
 <!-- Portfolio Modals -->
 
-<!-- Modal 1 -->
-<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="modal-body">
-              <!-- Project Details Go Here -->
-              <h2 class="text-uppercase">{{ page.section_two_item_one_title }}</h2>
-              <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-              <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_de_pina.jpg' %}" alt="">
-              <p>{{ page.section_two_item_one_body|richtext }}</p>
-              <!--<ul class="list-inline">-->
-                <!--<li>Date: January 2017</li>-->
-                <!--<li>Client: Threads</li>-->
-                <!--<li>Category: Illustration</li>-->
-              <!--</ul>-->
-              <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-times"></i>
-                Cerrar</button>
+{% for category in page.get_children %}
+{% with category=category.specific %}
+  <!-- <h3>{{category.title}}</h3> -->
+  {% for product in category.get_children %}
+    {% with product=product.specific %}
+      {% if product.featured_product %}
+        <div class="portfolio-modal modal fade" id="#portfolioModal{{ product.pk }}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                  <div class="rl"></div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="modal-body">
+                      <!-- Project Details Go Here -->
+                      <h2 class="text-uppercase">{{ product.title }}</h2>
+                      <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
+                      <!-- {% image product.images.first.image original class="img-fluid d-block mx-auto" %} -->
+                      <!-- <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_de_pina.jpg' %}" alt=""> -->
+                      <!-- <p>{{ product.description|richtext }}</p> -->
+                      <!--<ul class="list-inline">-->
+                        <!--<li>Date: January 2017</li>-->
+                        <!--<li>Client: Threads</li>-->
+                        <!--<li>Category: Illustration</li>-->
+                      <!--</ul>-->
+                      <button class="btn btn-primary" data-dismiss="modal" type="button">
+                        <i class="fa fa-times"></i>
+                        Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      {% endif %}
+    {% endwith %}
+  {% endfor %}
+{% endwith %}
+{% endfor %}
 
-<!-- Modal 2 -->
-<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="modal-body">
-              <!-- Project Details Go Here -->
-              <h2 class="text-uppercase">{{ page.section_two_item_two_title }}</h2>
-              <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-              <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_de_fresa.jpg' %}" alt="">
-              <p>{{ page.section_two_item_two_body|richtext }}</p>
-              <!--<ul class="list-inline">-->
-                <!--<li>Date: January 2017</li>-->
-                <!--<li>Client: Explore</li>-->
-                <!--<li>Category: Graphic Design</li>-->
-              <!--</ul>-->
-              <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-times"></i>
-                Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 3 -->
-<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="modal-body">
-              <!-- Project Details Go Here -->
-              <h2 class="text-uppercase">{{ page.section_two_item_three_title }}</h2>
-              <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-              <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_de_chocolate.jpg' %}" alt="">
-              <p>{{ page.section_two_item_three_body|richtext }}</p>
-              <!--<ul class="list-inline">-->
-                <!--<li>Date: January 2017</li>-->
-                <!--<li>Client: Finish</li>-->
-                <!--<li>Category: Identity</li>-->
-              <!--</ul>-->
-              <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-times"></i>
-                Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 4 -->
-<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="modal-body">
-              <!-- Project Details Go Here -->
-              <h2 class="text-uppercase">{{ page.section_two_item_four_title }}</h2>
-              <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-              <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_marmoleada.jpg' %}" alt="">
-              <p>{{ page.section_two_item_four_body|richtext }}</p>
-              <!--<ul class="list-inline">-->
-                <!--<li>Date: January 2017</li>-->
-                <!--<li>Client: Lines</li>-->
-                <!--<li>Category: Branding</li>-->
-              <!--</ul>-->
-              <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-times"></i>
-                Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 5 -->
-<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="modal-body">
-              <!-- Project Details Go Here -->
-              <h2 class="text-uppercase">{{ page.section_two_item_five_title }}</h2>
-              <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-              <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_tres_leches.jpg' %}" alt="">
-              <p>{{ page.section_two_item_five_body|richtext }}</p>
-              <!--<ul class="list-inline">-->
-                <!--<li>Date: January 2017</li>-->
-                <!--<li>Client: Southwest</li>-->
-                <!--<li>Category: Website Design</li>-->
-              <!--</ul>-->
-              <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-times"></i>
-                Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 6 -->
-<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="close-modal" data-dismiss="modal">
-        <div class="lr">
-          <div class="rl"></div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="modal-body">
-              <!-- Project Details Go Here -->
-              <h2 class="text-uppercase">{{ page.section_two_item_six_title }}</h2>
-              <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-              <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/profiteroles.jpeg' %}" alt="">
-              <p>{{ page.section_two_item_six_body|richtext }}</p>
-              <!--<ul class="list-inline">-->
-                <!--<li>Date: January 2017</li>-->
-                <!--<li>Client: Window</li>-->
-                <!--<li>Category: Photography</li>-->
-              <!--</ul>-->
-              <button class="btn btn-primary" data-dismiss="modal" type="button">
-                <i class="fa fa-times"></i>
-                Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}
 
 {% block extra_css %} 
@@ -663,6 +283,7 @@
 {% endblock %}
 
 {% block extra_js %}
+
 {% get_hit_count for page as hitcount %}
 {% get_hit_count_js_variables for page as hitcount_js %}
 <script src="{% static 'hitcount/jquery.postcsrf.js' %}"></script>

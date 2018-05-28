@@ -23,59 +23,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Application definition
 
-# INSTALLED_APPS = [
-#     'home',
-#     'search',
-#     'products'
-
-#     'hitcount',
-#     # 'wagtail.contrib.forms',
-#     # 'wagtail.contrib.redirects',
-#     # 'wagtail.embeds',
-#     # 'wagtail.sites',
-#     # 'wagtail.users',
-#     # 'wagtail.snippets',
-#     # 'wagtail.documents',
-#     # 'wagtail.images',
-#     # 'wagtail.search',
-#     # 'wagtail.admin',
-#     # 'wagtail.core',
-
-#     'wagtail.wagtailforms',
-#     'wagtail.wagtailredirects',
-#     'wagtail.wagtailembeds',
-#     'wagtail.wagtailsites',
-#     'wagtail.wagtailusers',
-#     'wagtail.wagtailsnippets',
-#     'wagtail.wagtaildocs',
-#     'wagtail.wagtailimages',
-#     'wagtail.wagtailsearch',
-#     'wagtail.wagtailadmin',
-#     'wagtail.wagtailcore',
-#     'wagtail.contrib.modeladmin',
-#     'wagtail.contrib.settings',
-
-#     'modelcluster',
-#     'taggit',
-#     'rest_framework',
-
-#     'longclaw.longclawcore',
-#     'longclaw.longclawsettings',
-#     'longclaw.longclawshipping',
-#     'longclaw.longclawproducts',
-#     'longclaw.longclaworders',
-#     'longclaw.longclawcheckout',
-#     'longclaw.longclawbasket',
-#     'longclaw.longclawstats',
-
-#     'django.contrib.admin',
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-# ]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
