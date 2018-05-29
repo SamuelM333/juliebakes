@@ -54,7 +54,7 @@
         {% for product in category.get_children %}
           {% with product=product.specific %}
             <div class="col-md-4 col-sm-6 portfolio-item">
-              <a class="portfolio-link" href="{% pageurl product %}">
+              <a class="portfolio-link" href="{{ product.url }}">
                 <div class="portfolio-hover">
                   <div class="portfolio-hover-content">
                     <i class="fa fa-plus fa-3x"></i>

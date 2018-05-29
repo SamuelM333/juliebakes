@@ -93,21 +93,6 @@ The only required field in `checkout_form` is `email`.
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-  
-  <!-- <div class="row">
-    <form action="." method="post">
-      {% csrf_token %}
-      <div class="col-md-6">
-        <h4>Shipping Address</h4>
-        {{ shipping_form|crispy }}
-        <div>
-            <h4>Your Email</h4>
-            {{ checkout_form|crispy }}
-        </div>
-        <input type="submit" class="btn btn-default"></input>
-      </div>
-    </form>
-  </div> -->
 </section>
 
 <!-- Footer -->
@@ -129,11 +114,6 @@ The only required field in `checkout_form` is `email`.
               <i class="fa fa-facebook"></i>
             </a>
           </li>
-          <!--<li class="list-inline-item">-->
-            <!--<a href="#">-->
-              <!--<i class="fa fa-linkedin"></i>-->
-            <!--</a>-->
-          <!--</li>-->
         </ul>
       </div>
       <div class="col-md-4">
@@ -169,10 +149,10 @@ An integration might have more than 1 SDK - e.g. braintree offers
 'dropin' and 'hostedfields'. A user should be able to rely on all
 possibilities being loaded or refer to individual gateway documentation.
 #} -->
-<!-- {% gateway_client_js as scripts %}  -->
-<!-- {% for js in scripts %}  -->
-  <!-- {{ js|safe }}  -->
-<!-- {% endfor %} -->
+{# {% gateway_client_js as scripts %}  #}
+{# {% for js in scripts %}  #}
+{# {{ js|safe }}  #}
+{# {% endfor %} #}
 
 
 
