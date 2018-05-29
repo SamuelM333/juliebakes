@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% load longclawcheckout_tags longclawcore_tags %}
+{% load static longclawcheckout_tags longclawcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags widget_tweaks %}
 
 {% block content %}
-{#
-`checkout_form`, `shipping_form`, `billing_form`, `basket` and `total_price` are the context
+<!-- {#
+`checkout_form`, `shipping_form`, `billing_form`, `basket` and `total_price` are the context 
 variables available for you to build up your checkout page.
 `checkout_form` includes the `different_billing_address` checkbox which you can use to
 decide whether to display `billing_form` or not (javascript needed here!).
@@ -18,26 +19,170 @@ The only required field in `checkout_form` is `email`.
 
 `basket` is a queryset of `BasketItem` for the current customer.
 `total_price` is the total cost of all items in the basket.
-#}
-{% endblock content %}
+#} -->
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand navbar-left js-scroll-trigger" href="/">
+      <img src="{% static 'img/logo.png' %}" height="70"></img>
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/productos/">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/basket/">Carrito</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-lead-in"></div>
+      <div class="intro-heading text-uppercase"></div>
+    </div>
+  </div>
+</header>
+
+<section class="bg-light" id="team">
+  <div class="container">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% for hidden_field in checkout_form.hidden_fields %}
+        {{ hidden_field }}
+      {% endfor %}
+      
+      {% with field=checkout_form.visible_fields|first %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {% render_field field class="form-control" %}
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+      {% endwith %}
+    
+      {% for hidden_field in shipping_form.hidden_fields %}
+        {{ hidden_field }}
+      {% endfor %}
+    
+      {% for field in shipping_form.visible_fields %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {% render_field field class="form-control" %}
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  
+  <!-- <div class="row">
+    <form action="." method="post">
+      {% csrf_token %}
+      <div class="col-md-6">
+        <h4>Shipping Address</h4>
+        {{ shipping_form|crispy }}
+        <div>
+            <h4>Your Email</h4>
+            {{ checkout_form|crispy }}
+        </div>
+        <input type="submit" class="btn btn-default"></input>
+      </div>
+    </form>
+  </div> -->
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <span class="copyright">Copyright &copy; Julie Bakes 2018</span>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li class="list-inline-item">
+            <a href="#">
+              <i class="fa fa-instagram"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <!--<li class="list-inline-item">-->
+            <!--<a href="#">-->
+              <!--<i class="fa fa-linkedin"></i>-->
+            <!--</a>-->
+          <!--</li>-->
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline quicklinks">
+          <li class="list-inline-item">
+            <span id="hitcount"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+{% endblock %}
+  
+{% block extra_css %} 
+<style>
+  #mainNav {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    background-color: #212529 !important;
+  }
+</style>
+
+{% endblock %}
 
 {% block extra_js %}
 
-{#
+<!-- {#
 Load any client javascript provided by the payment gateway.
 This will give a list of <script/> tags which load the client SDK's.
 An integration might have more than 1 SDK - e.g. braintree offers
 'dropin' and 'hostedfields'. A user should be able to rely on all
 possibilities being loaded or refer to individual gateway documentation.
-#}
-{% gateway_client_js as scripts %}
-{% for js in scripts %}
-{{ js|safe }}
-{% endfor %}
+#} -->
+<!-- {% gateway_client_js as scripts %}  -->
+<!-- {% for js in scripts %}  -->
+  <!-- {{ js|safe }}  -->
+<!-- {% endfor %} -->
 
+
+
+<!--
 {#
 Finally add the media from the checkout form. This provides the ``initShippingOption`` function
 which will initialize the shipping option dropdown on the checkout form
-#}
+#}-->
 {{ checkout_form.media }}
 
+<script>initShippingOption();</script>
+
+{% endblock %}

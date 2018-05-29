@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'widget_tweaks',
     'rest_framework',
     'hitcount',
 

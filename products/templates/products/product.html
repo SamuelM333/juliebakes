@@ -1,40 +1,142 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags longclawbasket_tags %}
+{% load static wagtailcore_tags wagtailimages_tags longclawbasket_tags %}
 
 {% block body_class %} template-productpage {%endblock%}
 
 {% block content %}
-<div class="product_content">
-    <div class="image">
-    {% if page.images %}
-       {% for item in page.images.all %}
-        <div style="float: left; margin: 10px">
-            {% image item.image fill-320x240 %}
-            <p>{{ item.caption }}</p>
-        </div>
-    {% endfor %}
-    {% else %}
-        <img style="width: 450px; background-color: #ECEFF1;" src="..."/>
-    {% endif %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand navbar-left js-scroll-trigger" href="/">
+      <img src="{% static 'img/logo.png' %}" height="70"></img>
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/productos/">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/basket/">Carrito</a>
+        </li>
+      </ul>
     </div>
-    
-    <div class="product_content_info">
-        <h1 class="product_title">{{ page.title }}</h1>
-        <div class="product_description">{{ page.description|richtext  }}</div>
-        {% add_to_basket_btn page.id btn_text="Add To Basket" btn_class="btn btn-default" %}
-        <a href="{% url 'longclaw_basket' %}">Carrito</a>
-    </div>
-</div>
-  {% if page.tags.all.count %}
-    <div class="tags">
-        <h3>Tags</h3>
-        {% for tag in page.tags.all %}
-            <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
-        {% endfor %}
-    </div>
-  {% endif %}
+  </div>
+</nav>
 
-    <p><a href="{{ page.get_parent.get_parent.url }}">Return</a></p>
+<!-- Header -->
+<header class="">
+  <div class="container">
+    <div class="intro-text">
+      <div class="intro-lead-in"></div>
+      <div class="intro-heading text-uppercase"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Product details -->
+<section class="bg-light" id="team">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">{{ page.title }}</h2>        
+        <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="team-member">
+          {% image page.specific.first_image.image fill-350x320-c100  class="mx-auto" %}
+          <h4>S/{{ page.variants.first.price }}</h4>
+          <!-- <p class="text-muted">S/{{ page.variants.first.price }}</p> -->
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="team-member">
+          <h4>{{ page.description|richtext  }}</h4>
+          <button id="add-button" class="btn btn-primary btn-xl text-uppercase">Agregar al carrito</button>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <!-- <a href="{% url 'longclaw_basket' %}">Carrito</a> -->
+        <!-- <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <span class="copyright">Copyright &copy; Julie Bakes 2018</span>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li class="list-inline-item">
+              <a href="https://instagram.com/julievbakes" target="_blank">
+                <i class="fa fa-instagram"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://facebook.com/Julie-Bakes-1676178559145386/" target="_blank">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline quicklinks">
+          <li class="list-inline-item">
+            <span id="hitcount"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% endblock %}
+
+{% block extra_css %} 
+<style>
+  #mainNav {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    background-color: #212529 !important;
+  }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'hitcount/jquery.postcsrf.js' %}"></script>
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+    $('#add-button').click(function () {
+
+        // Add to the basket
+        $.postCSRF("/api/basket/", { 
+            variant_id: "{{ page.variants.first.pk }}",
+            quantity: 1
+        }).done(function(data) {
+            console.log(data);
+            window.location.replace('/basket/');
+        }).fail(function(data) {
+            console.log(data);
+        });
+    });
+  });
+</script>
 
 {% endblock %}
