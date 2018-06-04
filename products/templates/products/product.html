@@ -5,31 +5,6 @@
 {% block body_class %} template-productpage {%endblock%}
 
 {% block content %}
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-  <div class="container">
-    <a class="navbar-brand navbar-left js-scroll-trigger" href="/">
-      <img src="{% static 'img/logo.png' %}" height="70"></img>
-    </a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      Menu
-      <i class="fa fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav text-uppercase ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/productos/">Productos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/basket/">Carrito</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
 <!-- Header -->
 <header class="">
@@ -72,38 +47,6 @@
     </div>
   </div>
 </section>
-
-<!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <span class="copyright">Copyright &copy; Julie Bakes 2018</span>
-      </div>
-      <div class="col-md-4">
-        <ul class="list-inline social-buttons">
-          <li class="list-inline-item">
-              <a href="https://instagram.com/julievbakes" target="_blank">
-                <i class="fa fa-instagram"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="https://facebook.com/Julie-Bakes-1676178559145386/" target="_blank">
-                <i class="fa fa-facebook"></i>
-              </a>
-            </li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <ul class="list-inline quicklinks">
-          <li class="list-inline-item">
-            <span id="hitcount"></span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</footer>
 
 {% endblock %}
 

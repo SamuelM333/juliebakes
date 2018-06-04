@@ -48,7 +48,11 @@
 
   <body id="page-top" class="{% block body_class %}{% endblock %}">
     {% wagtailuserbar %}
+    {% include "navbar.html" %}
+    
     {% block content %}{% endblock %}
+    
+    {% include "footer.html" %}
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>

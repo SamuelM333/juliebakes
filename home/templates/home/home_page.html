@@ -6,32 +6,6 @@
 
 {% block content %}
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-  <div class="container">
-    <a class="navbar-brand navbar-left js-scroll-trigger" href="/">
-      <img src="{% static 'img/logo.png' %}" height="70"></img>
-    </a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      Menu
-      <i class="fa fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/productos/">Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/basket/">Carrito</a>
-          </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <!-- Header -->
 <header class="masthead">
   <div class="container">
@@ -147,94 +121,6 @@
   </div>
 </section>
 
-<!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <span class="copyright">Copyright &copy; Julie Bakes 2018</span>
-      </div>
-      <div class="col-md-4">
-        <ul class="list-inline social-buttons">
-          <li class="list-inline-item">
-            <a href="https://instagram.com/julievbakes" target="_blank">
-              <i class="fa fa-instagram"></i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a href="https://facebook.com/Julie-Bakes-1676178559145386/" target="_blank">
-              <i class="fa fa-facebook"></i>
-            </a>
-          </li>
-          <!--<li class="list-inline-item">-->
-            <!--<a href="#">-->
-              <!--<i class="fa fa-linkedin"></i>-->
-            <!--</a>-->
-          <!--</li>-->
-        </ul>
-      </div>
-      <div class="col-md-4">
-       <ul class="list-inline quicklinks">
-         <li class="list-inline-item">
-           <span id="hitcount"></span>
-           <!-- <a href="#"></a> -->
-         </li>
-         <!-- <li class="list-inline-item"> -->
-      <!--      <a href="#">Terms of Use</a>-->
-      <!--    </li>-->
-       </ul>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Portfolio Modals -->
-
-{% for category in page.get_children %}
-{% with category=category.specific %}
-  <!-- <h3>{{category.title}}</h3> -->
-  {% for product in category.get_children %}
-    {% with product=product.specific %}
-      {% if product.featured_product %}
-        <div class="portfolio-modal modal fade" id="#portfolioModal{{ product.pk }}" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                  <div class="rl"></div>
-                </div>
-              </div>
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-8 mx-auto">
-                    <div class="modal-body">
-                      <!-- Project Details Go Here -->
-                      <h2 class="text-uppercase">{{ product.title }}</h2>
-                      <!--<p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>-->
-                      <!-- {% image product.images.first.image original class="img-fluid d-block mx-auto" %} -->
-                      <!-- <img class="img-fluid d-block mx-auto" src="{% static 'img/tortas/torta_de_pina.jpg' %}" alt=""> -->
-                      <!-- <p>{{ product.description|richtext }}</p> -->
-                      <!--<ul class="list-inline">-->
-                        <!--<li>Date: January 2017</li>-->
-                        <!--<li>Client: Threads</li>-->
-                        <!--<li>Category: Illustration</li>-->
-                      <!--</ul>-->
-                      <button class="btn btn-primary" data-dismiss="modal" type="button">
-                        <i class="fa fa-times"></i>
-                        Cerrar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endif %}
-    {% endwith %}
-  {% endfor %}
-{% endwith %}
-{% endfor %}
-
 {% endblock %}
 
 {% block extra_css %} 
@@ -264,7 +150,6 @@
       .done(function(data){
         console.log(data.hit_counted);
         console.log(data.hit_message);
-        $('#hitcount').text("Visitas: {{hitcount}}");
     }).fail(function(data){
         console.log('POST failed');
         console.log(data);

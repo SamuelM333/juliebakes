@@ -2,7 +2,6 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
 from hitcount.models import HitCount, HitCountMixin
-
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
@@ -13,7 +12,8 @@ class HomePage(Page, HitCountMixin):
 
     # Hitcount
     hit_count_generic = GenericRelation(
-        HitCount, object_id_field='object_pk',
+        HitCount,
+        object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
     )
 
@@ -66,4 +66,4 @@ class ProductsPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('header', classname="full"),
         FieldPanel('subheader', classname="full"),
-    ]    
+    ]
