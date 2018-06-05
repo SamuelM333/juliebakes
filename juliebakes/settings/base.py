@@ -96,6 +96,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'longclaw.longclawsettings.context_processors.currency',
+                'home.context_processors.hitcount'
             ],
         },
     },
