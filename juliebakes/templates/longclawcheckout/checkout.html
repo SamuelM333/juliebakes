@@ -34,9 +34,11 @@ The only required field in `checkout_form` is `email`.
 
 <section class="bg-light" id="team">
   <div class="container">
+    <h1 class="text-centered">Checkout</h1>
     <form method="post" novalidate>
       {% csrf_token %}
-
+      <h3 class="panel-title display-td" >Datos Personales</h3>
+      
       {% for hidden_field in checkout_form.hidden_fields %}
         {{ hidden_field }}
       {% endfor %}
@@ -64,8 +66,57 @@ The only required field in `checkout_form` is `email`.
           {% endif %}
         </div>
       {% endfor %}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3 col-10 offset-1 pl-0 pr-0">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row">
+                  <div class="col-md-7 col-12 pt-2">
+                    <h6 class="m-0"><strong>Datos de pago</strong></h6>
+                  </div>
+                  <div class="col-md-5 col-12 icons">
+                    <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i>
+                    <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i>
+                    <i class="fa fa-cc-discover fa-2x" aria-hidden="true"></i>
+                    <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i>
+                  </div>
+                </div>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="form-group">
+                        <label for="validationTooltipCardNumber"><strong>N&uacute;mero de tarjeta</strong></label>
+                        <div class="input-group">
+                          <input type="text" class="form-control border-right-0" id="validationTooltipCardNumber" placeholder="Número de tarjeta">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text rounded-right" id="validationTooltipCardNumber"><i class="fa fa-credit-card"></i></span>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-12">
+                        <div class="form-group">
+                          <label for="exampleInputExpirationDate"><strong>Fecha de expiraci&oacute;n</strong></label>
+                          <input type="text" class="form-control" id="exampleInputExpirationDate" placeholder="MM / YY">
+                      </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                          <label for="exampleInputCvcCode"><strong>C&oacute;digo CVC</strong></label>
+                          <input type="text" class="form-control" id="exampleInputCvcCode" placeholder="CVC">
+                      </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 pb-2 pt-2">Submit</button>
+                </form>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
     </form>
   </div>
 </section>
@@ -78,6 +129,19 @@ The only required field in `checkout_form` is `email`.
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     background-color: #212529 !important;
+  }
+
+  .card-header .icons .fa-cc-visa{
+    color: #FFB85F;	
+  }
+  .card-header .icons .fa-cc-discover{
+    color: #027878;
+  }
+  .card-header .icons .fa-cc-amex{
+    color: #EB4960;
+  }
+  .card-body label{
+    font-size: 14px;
   }
 </style>
 
