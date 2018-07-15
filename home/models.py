@@ -2,9 +2,10 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
 from hitcount.models import HitCount, HitCountMixin
+from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class HomePage(Page, HitCountMixin):
@@ -20,7 +21,7 @@ class HomePage(Page, HitCountMixin):
     # Header
     header = models.CharField(max_length=255, blank=True)
     subheader = models.CharField(max_length=255, blank=True)
-    
+
     # Section one
     section_one_title = models.CharField(max_length=255, default="")
     section_one_body = RichTextField(blank=True)
@@ -30,11 +31,11 @@ class HomePage(Page, HitCountMixin):
     section_one_item_two_body = RichTextField(blank=True)
     section_one_item_three_title = models.CharField(max_length=255, default="")
     section_one_item_three_body = RichTextField(blank=True)
-    
+
     # Section two
     section_two_title = models.CharField(max_length=255, default="")
     section_two_body = RichTextField(blank=True)
-    
+
     # Section three
     section_three_title = models.CharField(max_length=255, default="")
     section_three_body = RichTextField(blank=True)
@@ -56,14 +57,32 @@ class HomePage(Page, HitCountMixin):
         FieldPanel('section_three_body', classname="full"),
     ]
 
+
 class ProductsPage(Page):
     # subpage_types = ('products.ProductIndex') # TODO
 
     # Header
     header = models.CharField(max_length=255, blank=True)
     subheader = models.CharField(max_length=255, blank=True)
-    
+
     content_panels = Page.content_panels + [
         FieldPanel('header', classname="full"),
         FieldPanel('subheader', classname="full"),
+    ]
+
+
+class RecipesIndex(Page):
+    subpage_types = ('home.RecipesPage',)
+
+
+class RecipesPage(Page):
+    # Main image
+    image = models.ForeignKey('wagtailimages.Image', on_delete=models.PROTECT, related_name='+')
+
+    # Content
+    body = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('image'),
+        FieldPanel('body', classname="full"),
     ]
