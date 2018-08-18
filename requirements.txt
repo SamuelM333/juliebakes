@@ -1,5 +1,4 @@
-Django>=1.10,<2.0
-django-hitcount==1.3.0
+Django==2.0.8
+wagtail==2.2.1
 django-widget-tweaks==1.4.2
-wagtail>=1.12.1,<2.0
-longclaw>=0.2.0
+

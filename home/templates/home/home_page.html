@@ -1,173 +1,149 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags wagtailimages_tags hitcount_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
 
-<!-- Header -->
-<header class="masthead">
-  <div class="container">
-    <div class="intro-text">
-      <div class="intro-lead-in">{{ page.header }}</div>
-      <div class="intro-heading">{{ page.subheader }}</div>
-      <!--<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>-->
-    </div>
-  </div>
-</header>
-
-<!-- Services -->
-<section id="services">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">{{ page.section_one_title }}</h2>
-        <h3 class="section-subheading text-muted">{{ page.section_one_body|richtext }}</h3>
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-lead-in">{{ page.header }}</div>
+        <div class="intro-heading">{{ page.subheader }}</div>
+        <!--<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>-->
       </div>
     </div>
-    <div class="row text-center">
-      <div class="col-md-4">
+  </header>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">{{ page.section_one_title }}</h2>
+          <h3 class="section-subheading text-muted">{{ page.section_one_body|richtext }}</h3>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
         <span class="fa-stack fa-4x">
           <i class="fa fa-circle fa-stack-2x text-primary"></i>
           <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">{{ page.section_one_item_one_title }}</h4>
-        <p class="text-muted">{{ page.section_one_item_one_body|richtext }}</p>
-      </div>
-      <div class="col-md-4">
+          <h4 class="service-heading">{{ page.section_one_item_one_title }}</h4>
+          <p class="text-muted">{{ page.section_one_item_one_body|richtext }}</p>
+        </div>
+        <div class="col-md-4">
         <span class="fa-stack fa-4x">
           <i class="fa fa-circle fa-stack-2x text-primary"></i>
           <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">{{ page.section_one_item_two_title }}</h4>
-        <p class="text-muted">{{ page.section_one_item_two_body|richtext }}</p>
-      </div>
-      <div class="col-md-4">
+          <h4 class="service-heading">{{ page.section_one_item_two_title }}</h4>
+          <p class="text-muted">{{ page.section_one_item_two_body|richtext }}</p>
+        </div>
+        <div class="col-md-4">
         <span class="fa-stack fa-4x">
           <i class="fa fa-circle fa-stack-2x text-primary"></i>
           <i class="fa fa-birthday-cake fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">{{ page.section_one_item_three_title }}</h4>
-        <p class="text-muted">{{ page.section_one_item_three_body|richtext }}</p>
+          <h4 class="service-heading">{{ page.section_one_item_three_title }}</h4>
+          <p class="text-muted">{{ page.section_one_item_three_body|richtext }}</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Portfolio Grid -->
-<section class="bg-light" id="portfolio">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">{{ page.section_two_title }}</h2>
-        <h3 class="section-subheading text-muted">{{ page.section_two_body|richtext }}</h3>
+  <!-- Portfolio Grid -->
+  <section class="bg-light" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">{{ page.section_two_title }}</h2>
+          <h3 class="section-subheading text-muted">{{ page.section_two_body|richtext }}</h3>
+        </div>
       </div>
-    </div>
-    <!-- <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-12 text-center">
             <a class="btn btn-primary" href="{{ page.get_children.first.url }}">Ver todos</a>
         </div>
     </div> -->
-    <div class="row">
-      {% for category in page.get_children.first.get_children %}
-        {% with category=category.specific %}
-          {% for product in category.get_children %}
-            {% with product=product.specific %}
-              {% if product.featured_product %}
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                  <!-- <a class="portfolio-link" data-toggle="modal" href="#portfolioModal{{ product.pk }}"> -->
-                  <a class="portfolio-link" href="{% pageurl product %}">
-                    <div class="portfolio-hover">
-                      <div class="portfolio-hover-content">
-                        <i class="fa fa-plus fa-3x"></i>
+      <div class="row">
+        {% for category in page.get_children.first.get_children %}
+          {% with category=category.specific %}
+            {% for product in category.get_children %}
+              {% with product=product.specific %}
+                {% if product.featured_product %}
+                  <div class="col-md-4 col-sm-6 portfolio-item">
+                    <!-- <a class="portfolio-link" data-toggle="modal" href="#portfolioModal{{ product.pk }}"> -->
+                    <a class="portfolio-link" href="{% pageurl product %}">
+                      <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                          <i class="fa fa-plus fa-3x"></i>
+                        </div>
                       </div>
+                      {% image product.first_image.image fill-350x320-c100 class="img-fluid" %}
+                    </a>
+                    <div class="portfolio-caption">
+                      <h4>{{ product.title }}</h4>
+                      <!--<p class="text-muted">Illustration</p>-->
                     </div>
-                    {% image product.first_image.image fill-350x320-c100 class="img-fluid" %}
-                  </a>
-                  <div class="portfolio-caption">
-                    <h4>{{ product.title }}</h4>
-                    <!--<p class="text-muted">Illustration</p>-->
                   </div>
-                </div>
-              {% endif %}
-            {% endwith %}
-          {% endfor %}
-        {% endwith %}
-      {% endfor %}
-    </div>
-    <div class="row">
+                {% endif %}
+              {% endwith %}
+            {% endfor %}
+          {% endwith %}
+        {% endfor %}
+      </div>
+      <div class="row">
         <div class="col-lg-12 text-center">
-            <a class="btn btn-primary btn-xl text-uppercase" href="{{ page.get_children.first.url }}">Ver todos</a>
+          <a class="btn btn-primary btn-xl text-uppercase" href="{{ page.get_children.first.url }}">Ver todos</a>
         </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Contact -->
-<section id="contact">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">{{ page.section_three_title }}</h2>
-        <h3 class="section-subheading text-muted">{{ page.section_three_body|richtext }}</h3>
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">{{ page.section_three_title }}</h2>
+          <h3 class="section-subheading text-muted">{{ page.section_three_body|richtext }}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div style="width: 100%">
+            <iframe width="100%" height="400"
+                    src="https://maps.google.com/maps?width=100%&amp;height=400&amp;hl=en&amp;coord=-12.1111,-77.0316&amp;q=Miraflores%2C%20Lima%2C%20Per%C3%BA+(Julie%20Bakes)&amp;ie=UTF8&amp;t=&amp;z=17&amp;iwloc=B&amp;output=embed"
+                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+            </iframe>
+          </div>
+          <br/>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div style="width: 100%"><iframe width="100%" height="400" src="https://maps.google.com/maps?width=100%&amp;height=400&amp;hl=en&amp;coord=-12.1111,-77.0316&amp;q=Miraflores%2C%20Lima%2C%20Per%C3%BA+(Julie%20Bakes)&amp;ie=UTF8&amp;t=&amp;z=17&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/create-google-map/">Embed Google Map</a></iframe></div><br/>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
 {% endblock %}
 
-{% block extra_css %} 
+{% block extra_css %}
 
-<style>
-  #contact p {
-    color: white;
-  }
+  <style>
+    #contact p {
+      color: white;
+    }
 
-  .intro-heading {
-    font-family: 'Alex Brush', cursive !important;
-    font-weight: 400 !important;
-  }
-</style>
+    .intro-heading {
+      font-family: 'Alex Brush', cursive !important;
+      font-weight: 400 !important;
+    }
+  </style>
 
 {% endblock %}
 
 {% block extra_js %}
-
-{% get_hit_count for page as hitcount %}
-{% get_hit_count_js_variables for page as hitcount_js %}
-<script type="text/javascript">
-  $(document).ready(function() {
-    function csrfSafeMethod(method) {
-      // these HTTP methods do not require CSRF protection
-      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-
-    $.ajax({
-      url: "{{ hitcount_js.ajax_url }}",
-      type: 'POST',
-      data: { hitcountPK : "{{ hitcount_js.pk }}" },
-      beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-          xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
-        }
-      },
-      success: function(result) {
-        console.log(result.hit_counted);
-        console.log(result.hit_message);
-      },
-      error: function(data) {
-        console.log('POST failed');
-        console.log(data);
-      }
-    });
-  });
-</script>
 
 {% endblock %}

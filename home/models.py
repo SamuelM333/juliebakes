@@ -1,22 +1,13 @@
-from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 
-from hitcount.models import HitCount, HitCountMixin
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 
-class HomePage(Page, HitCountMixin):
+class HomePage(Page):
     # parent_page_types = [] # TODO Only Root here
-
-    # Hitcount
-    hit_count_generic = GenericRelation(
-        HitCount,
-        object_id_field='object_pk',
-        related_query_name='hit_count_generic_relation'
-    )
 
     # Header
     header = models.CharField(max_length=255, blank=True)

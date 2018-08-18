@@ -1,85 +1,102 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags wagtailimages_tags longclawbasket_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
-{% block body_class %} template-productpage {%endblock%}
+{% block body_class %} template-productpage {% endblock %}
 
 {% block content %}
 
-<!-- Header -->
-<header class="">
-  <div class="container">
-    <div class="intro-text">
-      <div class="intro-lead-in"></div>
-      <div class="intro-heading text-uppercase"></div>
+  <!-- Header -->
+  <header class="">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-lead-in"></div>
+        <div class="intro-heading text-uppercase"></div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- Product details -->
-<section class="bg-light" id="team">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">{{ page.title }}</h2>        
-        <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="team-member">
-          {% image page.specific.first_image.image fill-350x320-c100  class="mx-auto" %}
-          <h4>S/{{ page.variants.first.price }}</h4>
-          <!-- <p class="text-muted">S/{{ page.variants.first.price }}</p> -->
+  <!-- Product details -->
+  <section class="bg-light" id="team">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">{{ page.title }}</h2>
+          <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
         </div>
       </div>
-      <div class="col-sm-8">
-        <div class="team-member">
-          <h4>{{ page.description|richtext  }}</h4>
-          <button id="add-button" class="btn btn-primary btn-xl text-uppercase">Agregar al carrito</button>
+      <div class="row">
+        <div class="col-sm-4">
+          <div id="product-carousel" class="team-member carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              {% for image in page.specific.image_list %}
+                {% if forloop.first %}
+                  <li data-target="#product-carousel" data-slide-to="0" class="active"></li>
+                {% else %}
+                  <li data-target="#product-carousel" data-slide-to="{{ forloop.counter0 }} "></li>
+                {% endif %}
+              {% endfor %}
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              {% for image in page.specific.image_list %}
+                {% if forloop.first %}
+                  <div class="carousel-item active">
+                    {% image image.image fill-350x320-c100 class="mx-auto" %}
+                  </div>
+                {% else %}
+                  <div class="carousel-item">
+                    {% image image.image fill-350x320-c100 class="mx-auto" %}
+                  </div>
+                {% endif %}
+
+              {% endfor %}
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#product-carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="team-member">
+            <h4>{{ page.description|richtext }}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+          </div>
         </div>
       </div>
-    <div class="row">
-      <div class="col-lg-8 mx-auto text-center">
-        <!-- <a href="{% url 'longclaw_basket' %}">Carrito</a> -->
-        <!-- <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p> -->
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
 {% endblock %}
 
-{% block extra_css %} 
-<style>
-  #mainNav {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    background-color: #212529 !important;
-  }
-</style>
+{% block extra_css %}
+  <style>
+    #mainNav {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      background-color: #212529 !important;
+    }
+
+    .carousel-control-prev-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+    }
+
+    .carousel-control-next-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+    }
+  </style>
 
 {% endblock %}
 
 {% block extra_js %}
-
-<script src="{% static 'hitcount/jquery.postcsrf.js' %}"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('#add-button').click(function () {
-
-        // Add to the basket
-        $.postCSRF("/api/basket/", { 
-            variant_id: "{{ page.variants.first.pk }}",
-            quantity: 1
-        }).done(function(data) {
-            console.log(data);
-            window.location.replace('/basket/');
-        }).fail(function(data) {
-            console.log(data);
-        });
-    });
-  });
-</script>
-
 {% endblock %}
