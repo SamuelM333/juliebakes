@@ -13,6 +13,8 @@
 __pycache__/
 local_settings.py
 db.sqlite3
+db.*
+original_images
 media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -123,11 +125,13 @@ venv.bak/
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+
 .history
 
+### PyCharm ###
+.idea
+
+commands.txt
+static
 
 # End of https://www.gitignore.io/api/sass,django,python,cloud9,visualstudiocode
