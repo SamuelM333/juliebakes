@@ -30,7 +30,7 @@ class Product(Page):
 
     @property
     def image_list(self):
-        return self.images.model.objects.all()
+        return self.images.model.get_queryset()
 
 
 # class ProductVariant(ProductVariantBase):
